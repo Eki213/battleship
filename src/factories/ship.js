@@ -3,6 +3,7 @@ export function Ship(length) {
 
   const hit = () => hits++;
   const isSunk = () => hits === length;
+  const getLength = () => length;
 
-  return { isSunk, hit };
+  return { isSunk, hit, getLength };
 }
