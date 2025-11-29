@@ -32,5 +32,7 @@ export function Gameboard() {
 
   const allSunk = () => ships.every((ship) => ship.isSunk());
 
-  return { receiveAttack, placeShip, allSunk };
+  const getShipPositions = () => ({ ...shipInfo });
+
+  return { receiveAttack, placeShip, allSunk, getShipPositions };
 }

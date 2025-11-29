@@ -1,0 +1,31 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: clamp(1rem, 0.8rem + 1.5vw, 2rem);
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.15rem;
+  aspect-ratio: 1/1;
+  padding: 1rem;
+  width: max(7.5em, 30vw);
+  font-size: max(2.5rem, 3.5vw);
+  margin: 0 auto;
+}
+
+.cell {
+  border: none;
+}
+
+.ship {
+  background-color: blue;
+}
