@@ -16,7 +16,7 @@ export function Gameboard() {
   };
 
   const receiveAttack = (coords) => {
-    const ship = shipInfo[coords.toString()];
+    const ship = shipInfo[coords];
     const pos = coords.toString();
 
     if (!ship) {
@@ -24,7 +24,7 @@ export function Gameboard() {
       return;
     }
 
-    if (!attackCoords.includes(pos)) {
+    if (!isHit(coords)) {
       ship.hit();
       attackCoords.push(pos);
     }
@@ -34,5 +34,19 @@ export function Gameboard() {
 
   const getShipPositions = () => ({ ...shipInfo });
 
-  return { receiveAttack, placeShip, allSunk, getShipPositions };
+  const getMissCoords = () => [...missCoords];
+
+  const isHit = (coords) => attackCoords.includes(coords.toString());
+
+  const isMiss = (coords) => missCoords.includes(coords.toString());
+
+  return {
+    receiveAttack,
+    placeShip,
+    allSunk,
+    getShipPositions,
+    isHit,
+    getMissCoords,
+    isMiss,
+  };
 }

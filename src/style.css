@@ -16,10 +16,9 @@
   grid-template-columns: repeat(10, 1fr);
   gap: 0.15rem;
   aspect-ratio: 1/1;
-  padding: 1rem;
   width: max(7.5em, 30vw);
   font-size: max(2.5rem, 3.5vw);
-  margin: 0 auto;
+  margin: 2rem auto;
 }
 
 .cell {
@@ -28,4 +27,12 @@
 
 .ship {
   background-color: blue;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: black;
 }
