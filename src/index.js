@@ -1,15 +1,15 @@
 import "./style.css";
 import { createBoard } from "./dom.js";
-import { Player } from "./factories/player.js";
 import { renderBoard } from "./dom.js";
+import { Game } from "./game.js";
 
-const player1 = Player("P1");
-const player2 = Player("P2");
-let turn = 1;
+const againstCPU = true;
+const game = Game(againstCPU);
+const players = game.getPlayers();
 
 document.addEventListener("DOMContentLoaded", () => {
-  createBoard(player1);
-  createBoard(player2);
+  createBoard(players[0]);
+  createBoard(players[1]);
 });
 
 const getCoords = (index) => {
@@ -20,20 +20,29 @@ const getCoords = (index) => {
 };
 
 document.addEventListener("click", (e) => {
-  const player = selectPlayer(turn);
   const cell = e.target;
   const boardEl = cell.closest(".board");
-  if (!boardEl || cell === boardEl || !boardEl.classList.contains(player.type))
+  const enemy = game.getEnemy();
+
+  if (
+    game.getWinner() ||
+    !boardEl ||
+    cell === boardEl ||
+    !boardEl.classList.contains(enemy.type)
+  )
     return;
 
-  const gameboard = player.gameboard;
   const coords = getCoords(cell.dataset.index);
-  if (gameboard.isHit(coords) || gameboard.isMiss(coords)) return;
-  gameboard.receiveAttack(coords);
-  renderBoard(player);
-  turn++;
+  if (!game.isValid(coords)) return;
+  game.playTurn(coords);
+  renderBoard(enemy);
+  if (againstCPU) renderBoard(players[0]);
+
+  const winner = game.getWinner();
+  if (winner) endGameHandler(winner);
 });
 
-function selectPlayer(turn) {
-  return turn % 2 === 0 ? player1 : player2;
+function endGameHandler(winner) {
+  const announcementsEl = document.querySelector(".announcements");
+  announcementsEl.textContent = `The winner is ${winner.type}!`;
 }
